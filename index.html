@@ -14,7 +14,12 @@
 		</div>
 		<div id='menu?'></div>
 		<div id='photo-grid'></div>
-		<div id='single-detail'></div>
+		<div id='single-detail'>
+			<div id='detail-photo'></div>
+			<div id='detail-text'></div>
+		</div>
+
+		<div id="add-new-view"></div>
 	</div>
 
 
@@ -36,14 +41,37 @@
 		{{/photo}}
 	</script>
 
-	<script type="x-tmpl-mustache" id="detail">
+	<script type="x-tmpl-mustache" id="detail-image">
 	{{#detail}}
 			<div id="big-pic"><img src="{{url}}" /></div>
-			<div id="stats">
-			<p>{{name}}</p>
-			<p>description{{description}}</p>
-			</div>
 	{{/detail}}
+	</script>
+
+	<script type="x-tmpl-mustache" id='detail-words'>
+	{{#detail}}
+		<div id='stats'>
+			<button class="detail-view"><a href="/edit/{{objectId}}">Edit</a></button>
+			<h2>{{name}}</h2>
+			<p>description{{description}}</p>
+		</div>
+	{{/detail}}
+	</script>
+
+	<script type="x-tmpl-mustache" id="edit">
+	{{#edit}}
+			<div id="edit-stats">
+				<form>
+					<button class="detail-view"><a href="/update/{{objectId}}">Save Changes</a></button>
+					<h2><input type="text" id="name-edit" value="{{name}}"></input></h2>
+					<p><input type="text" id="description-edit" value="{{description}}"></input></p>
+				</form>
+			</div>
+	{{/edit}}
+
+	</script>
+
+	<script type="x-tmpl-mustache" id="add">
+
 	</script>
 
 </body>

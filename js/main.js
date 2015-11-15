@@ -33,9 +33,9 @@ var photos = new PhotoCollection();
 
 photos.fetch({
       success: function(resp) {
-      console.log(resp.toJSON());
 			var photosData = {"photo": resp.toJSON()};
 			console.log(photosData);
+			//Mustache render to template index;
       var photosTemplate = $('#photos').text();
       var photosHTML = Mustache.render(photosTemplate, photosData);
       $('#photo-grid').html(photosHTML);
@@ -51,8 +51,10 @@ var Router = Backbone.Router.extend({
       },
       routes: {
 				"add": "add",
-				"edit": "edit",
-        "detail/:objectID": "detail",
+				"new": "new",
+				"edit/:objectId": "edit",
+				"update/:objectId": "update",
+        "detail/:objectId": "detail",
         "": "index"
       }
     });
@@ -60,21 +62,45 @@ var Router = Backbone.Router.extend({
 var router = new Router();
 
 router.on('route:detail', function(objectId) {
-				console.log(objectId);
-				var detailData = {"detail": photos.get(objectId).toJSON()};
-				console.log(detailData);
-				var detailTemplate = $('#detail').text();
-				var detailHTML = Mustache.render(detailTemplate, detailData);
-				$('#single-detail').html(detailHTML);
-				$('#photo-grid').hide();
-				$('#single-detail').show();
+			var detailData = {"detail": photos.get(objectId).toJSON()};
+			console.log(detailData);
+				//Mustache render image to left side
+
+			var detailWordsTemplate =	$('detail-words').text();
+			console.log(detailWordsTemplate);
+			var detailWordsHTML = Mustache.render(detailWordsTemplate, detailData);
+			console.log(detailWordsHTML);
+			$('#detail-text').html(detailWordsHTML);
+
+			// var detailImageTemplate = $('#detail-image').text();
+			// var detailImageHTML = Mustache.render(detailImageTemplate, detailData);
+			// $('#detail-photo').html(detailImageHTML);
+				//Mustache render text to right side
 
 
 
+			$('#photo-grid').hide();
+			$('#single-detail').show();
 		});
 
-	router.on('route:index', function () {
-		$('#photo-grid').show();
-		$('#single-detail').hide();
-		});
+router.on('route:edit', function(objectId) {
+			console.log(objectId);
+			var editData = {'edit': photos.get(objectId).toJSON()};
+			console.log(editData);
+			var editTemplate = $('#edit').text();
+			var editHTML = Mustache.render(editTemplate, editData);
+			$('#detail-text').html(editHTML);
+			$('#stats').hide();
+			$('#edit-stats').show();
+});
+
+router.on('route:update' , function(objectId) {
+
+
+});
+
+router.on('route:index', function () {
+	$('#photo-grid').show();
+	$('#single-detail').hide();
+	});
 });
