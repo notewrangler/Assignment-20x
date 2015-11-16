@@ -21,6 +21,26 @@ var Photo = Backbone.Model.extend({
 		description: null,
 		username: null
 	},
+	validate: function (attrs) {
+    if (!attrs.name) {
+      return "Photo name (name of drummer) is required";
+    }
+    if (!attrs.url) {
+      return "Photo URL is required";
+    }
+    if (typeof attrs.name !== 'string') {
+      return "Photo name must be a string";
+    }
+    if (typeof attrs.url !== 'string') {
+      return "Photo URL must be a string";
+    }
+    if (!attrs.username) {
+      return "Username is required";
+    }
+		if (typeof attrs.username !== 'string') {
+      return "Username must be a string";
+    }
+  },
 	_parse_class_name: "Photo"
 
 });
@@ -89,35 +109,54 @@ router.on('route:edit', function(objectId){
 			});
 	});
 
-	// router.on('route:add', function(){
-	// 		var photo = new Photo();
-	// 		var addData = {"add":{
-	// 				"url": "",
-	// 				"name": "",
-	// 				"description": "",
-	// 				"username": ""
-	// 			}
-	// 		};
-	// 		var addTemplate = $('#add').text();
-	// 		var addHTML = Mustache.render(addTemplate, addData);
-	// 		$('#single-detail').html(addHTML);
-	// 			$('#single-detail').on('click', 'a', function(e){
-	// 				e.preventDefault();
-	// 				var addName = $('#edit-name').val();
-	// 				var addDesc = $('#edit-description').val();
-	// 				var href = $(this).attr('href');
-	// 				photo.set({url: addURL, name: addName, description: addDesc});
-	// 				photo.save({},{
-	// 						success: function(){console.log("saved");},
-	// 						error: function(err){console.log(err);}
-	// 				});
-	// 				router.navigate(href, {trigger:true});
-	// 			});
-	// 	});
+	router.on('route:add', function(){
+			var photo = new Photo();
+			var addData = {"add":{
+					"url": "",
+					"name": "",
+					"description": "",
+					"username": ""
+				}
+			};
+			var addTemplate = $('#add').text();
+			var addHTML = Mustache.render(addTemplate, addData);
+			$('#single-detail').html(addHTML);
+			$('#photo-grid').hide();
+			$('#add-button').hide();
+				$('#single-detail').on('click', 'a', function(e){
+					e.preventDefault();
+					var addURL = $('#add-url').val();
+					var addName = $('#add-name').val();
+					var addDesc = $('#add-description').val();
+					var addUsername = $('#add-username').val();
+					var href = $(this).attr('href');
+					photo.set({url: addURL,
+										name: addName,
+										description: addDesc,
+										username: addUsername
+									});
+					photo.save({},{
+							success: function(){console.log("saved");},
+							error: function(err){console.log(err);}
+					});
+					photos.add(photo);
+					var newphoto = new Photo();
+					photo.fetch({
+						success: function(resp){
+						  newphoto = resp.toJSON();
+						},
+						error: function(err){
+							console.log(err);
+						}
+					});
+					router.navigate(href, {trigger:true});
+				});
+		});
 
 
 router.on('route:index', function () {
 		$('#photo-grid').show();
+		$('#add-button').show();
 		$('#single-detail').hide();
 	});
 

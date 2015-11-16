@@ -7,6 +7,10 @@ body {
 	font-family: Arial, sans-serif;
 }
 
+#top-part {
+	position: relative;
+}
+
 h1 {
 	font-family: 'Permanent Marker', cursive;
 	font-size: 2.5rem;
@@ -17,6 +21,28 @@ h1 {
 	width: 85%;
 	margin: auto;
 }
+
+#add-button {
+	position: absolute;
+	top: 20px;
+	right: 180px;
+	width: 150px;
+	height: 40px;
+	border-radius: 5px;
+	background: #1E90FF;
+}
+
+#add-button:hover {
+	background: #40E0D0;
+}
+
+#add-button a {
+	color: white;
+	font-size: 1.1rem;
+	text-decoration: none;
+	}
+
+
 
 .pic {
 	display: inline-block;
@@ -136,9 +162,31 @@ h1 {
 	text-decoration: none;
 }
 
-#edit-name {
+#add-url {
 	font-size: 0.8rem;
-	width: 200px;
+	width: 500px;
 	height: 30px;
+	border-radius: 5px;
+}
+
+#add-name {
+	font-size: 0.8rem;
+	width: 500px;
+	height: 30px;
+	border-radius: 5px;
+}
+
+#add-description {
+	font-size: 0.8rem;
+	width: 500px;
+	height: 110px;
+	border-radius: 5px;
+	margin-bottom: 25px;
+}
+#add-username {
+	font-size: 0.8rem;
+	width: 500px;
+	height: 30px;
+	margin-bottom: 20px;
 	border-radius: 5px;
 }

@@ -11,15 +11,10 @@
 	<div id="container">
 		<div id='top-part'>
 			<a href="/"><h1>Jazz Tubs</h1></a>
+			<button id="add-button"><a href="/add">Add a photo</a></button>
 		</div>
-		<div id='menu?'></div>
 		<div id='photo-grid'></div>
-		<div id='single-detail'>
-			<div id='detail-photo'></div>
-			<div id='detail-text'></div>
-		</div>
-
-		<div id="add-new-view"></div>
+		<div id='single-detail'></div>
 	</div>
 
 
@@ -69,6 +64,21 @@
 				<button id="save-changes"><a href="/detail/{{objectId}}">Save Changes</a></button>
 			</div>
 	{{/edit}}
+	</script>
+	<script type="x-tmpl-mustache" id="add">
+	{{#add}}
+			<div id="stats">
+				<p><label for="add-url">Paste URL:</label></p>
+				<input type='text' id="add-url" name="e-name" value="{{name}}"></input>
+				<p><label for="add-name">Add Name:</label></p>
+				<input type='text' id="add-name" name="a-name" value="{{name}}"></input>
+				<p><label for="add-description">Add Description:</label></p>
+				<textarea rows="8" columns="50" id="add-description" name="a-description" value="{{description}}"></textarea><br>
+				<p><label for="add-username">Username:</label></p>
+				<input type='text' id="add-username" name="a-username" value="{{name}}"></input><br>
+				<button id="save-changes"><a href="/">Save Changes</a></button>
+			</div>
+	{{/add}}
 	</script>
 
 </body>
