@@ -1,6 +1,7 @@
 
 
 $(document).ready(function(){
+
 	$("body").on('click', "a", function(e){
   e.preventDefault();
   var href = $(this).attr('href');
@@ -51,9 +52,7 @@ var Router = Backbone.Router.extend({
       },
       routes: {
 				"add": "add",
-				"new": "new",
 				"edit/:objectId": "edit",
-				"update/:objectId": "update",
         "detail/:objectId": "detail",
         "": "index"
       }
@@ -62,45 +61,64 @@ var Router = Backbone.Router.extend({
 var router = new Router();
 
 router.on('route:detail', function(objectId) {
-			var detailData = {"detail": photos.get(objectId).toJSON()};
-			console.log(detailData);
-				//Mustache render image to left side
+		var detailData = {"detail": photos.get(objectId).toJSON()};
+		var detailTemplate = $('#detail').text();
+		var detailHTML = Mustache.render(detailTemplate, detailData);
+		$('#single-detail').html(detailHTML);
+		$('#photo-grid').hide();
+		$('#single-detail').show();
+	});
 
-			var detailWordsTemplate =	$('detail-words').text();
-			console.log(detailWordsTemplate);
-			var detailWordsHTML = Mustache.render(detailWordsTemplate, detailData);
-			console.log(detailWordsHTML);
-			$('#detail-text').html(detailWordsHTML);
+router.on('route:edit', function(objectId){
+		var updateData = photos.get(objectId);
+		var editData = {"edit": photos.get(objectId).toJSON()};
+		var editTemplate = $('#edit').text();
+		var editHTML = Mustache.render(editTemplate, editData);
+		$('#single-detail').html(editHTML);
+			$('#single-detail').on('click', 'a', function(e){
+				e.preventDefault();
+				var newName = $('#edit-name').val();
+				var newDesc = $('#edit-description').val();
+				var href = $(this).attr('href');
+				updateData.set({name: newName, description: newDesc});
+				updateData.save({},{
+						success: function(){console.log("saved");},
+						error: function(err){console.log(err);}
+				});
+				router.navigate(href, {trigger:true});
+			});
+	});
 
-			// var detailImageTemplate = $('#detail-image').text();
-			// var detailImageHTML = Mustache.render(detailImageTemplate, detailData);
-			// $('#detail-photo').html(detailImageHTML);
-				//Mustache render text to right side
+	// router.on('route:add', function(){
+	// 		var photo = new Photo();
+	// 		var addData = {"add":{
+	// 				"url": "",
+	// 				"name": "",
+	// 				"description": "",
+	// 				"username": ""
+	// 			}
+	// 		};
+	// 		var addTemplate = $('#add').text();
+	// 		var addHTML = Mustache.render(addTemplate, addData);
+	// 		$('#single-detail').html(addHTML);
+	// 			$('#single-detail').on('click', 'a', function(e){
+	// 				e.preventDefault();
+	// 				var addName = $('#edit-name').val();
+	// 				var addDesc = $('#edit-description').val();
+	// 				var href = $(this).attr('href');
+	// 				photo.set({url: addURL, name: addName, description: addDesc});
+	// 				photo.save({},{
+	// 						success: function(){console.log("saved");},
+	// 						error: function(err){console.log(err);}
+	// 				});
+	// 				router.navigate(href, {trigger:true});
+	// 			});
+	// 	});
 
-
-
-			$('#photo-grid').hide();
-			$('#single-detail').show();
-		});
-
-router.on('route:edit', function(objectId) {
-			console.log(objectId);
-			var editData = {'edit': photos.get(objectId).toJSON()};
-			console.log(editData);
-			var editTemplate = $('#edit').text();
-			var editHTML = Mustache.render(editTemplate, editData);
-			$('#detail-text').html(editHTML);
-			$('#stats').hide();
-			$('#edit-stats').show();
-});
-
-router.on('route:update' , function(objectId) {
-
-
-});
 
 router.on('route:index', function () {
-	$('#photo-grid').show();
-	$('#single-detail').hide();
+		$('#photo-grid').show();
+		$('#single-detail').hide();
 	});
+
 });

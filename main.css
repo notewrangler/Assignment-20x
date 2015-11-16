@@ -2,13 +2,14 @@ body {
 	background-image: url('assets/jazz-club-smaller.jpg');
 	/*background-repeat: no-repeat;*/
 	background-size: contain;
-	height: 2000px;
+	height: 1500px;
 	color: #F5F6F6;
 	font-family: Arial, sans-serif;
 }
 
 h1 {
 	font-family: 'Permanent Marker', cursive;
+	font-size: 2.5rem;
 	color: #40E0D0;
 }
 
@@ -56,16 +57,88 @@ h1 {
 
 #big-pic {
 	display: inline-block;
-	width: 700px;
-	height: 500px;
+	width: 650px;
+	height: 480px;
+	padding-right: 60px;
+
 }
 #big-pic img {
 	width: 700px;
 	height: 500px;
+	border-radius: 10px;
+}
+#user {
+	display: inline-block;
 }
 
 #detail-text {
 	display: inline-block;
 	vertical-align: top;
+	margin-top: -30px;
+}
 
+#stats h3 {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 1.4rem;
+	color: #40E0D0;
+}
+#description {
+	width: 400px;
+}
+
+#edit-button {
+	display: inline-block;
+	float:right;
+	width: 150px;
+	height: 40px;
+	border-radius: 5px;
+	background: #1E90FF;
+}
+
+#edit-button:hover {
+	background: #40E0D0;
+}
+
+#edit-button a {
+	color: white;
+	font-size: 1.1rem;
+	text-decoration: none;
+	}
+#edit-name {
+	font-size: 0.8rem;
+	width: 200px;
+	height: 30px;
+	border-radius: 5px;
+}
+
+#edit-description {
+	font-size: 0.8rem;
+	width: 400px;
+	height: 110px;
+	border-radius: 5px;
+	margin-bottom: 25px;
+}
+
+#save-changes {
+	width: 250px;
+	height: 40px;
+	border-radius: 5px;
+	background: #1E90FF;
+}
+
+#save-changes:hover {
+	background: #40E0D0;
+}
+
+#save-changes a {
+	color: white;
+	font-size: 1.1rem;
+	text-decoration: none;
+}
+
+#edit-name {
+	font-size: 0.8rem;
+	width: 200px;
+	height: 30px;
+	border-radius: 5px;
 }
