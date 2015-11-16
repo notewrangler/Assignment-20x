@@ -1,6 +1,7 @@
 
 
 $(document).ready(function(){
+
 	$("body").on('click', "a", function(e){
   e.preventDefault();
   var href = $(this).attr('href');
@@ -33,7 +34,6 @@ var photos = new PhotoCollection();
 
 photos.fetch({
       success: function(resp) {
-      console.log(resp.toJSON());
 			var photosData = {"photo": resp.toJSON()};
 			console.log(photosData);
       var photosTemplate = $('#photos').text();
@@ -51,8 +51,8 @@ var Router = Backbone.Router.extend({
       },
       routes: {
 				"add": "add",
-				"edit": "edit",
-        "detail/:objectID": "detail",
+				"edit/:objectId": "edit",
+        "detail/:objectId": "detail",
         "": "index"
       }
     });
@@ -60,21 +60,64 @@ var Router = Backbone.Router.extend({
 var router = new Router();
 
 router.on('route:detail', function(objectId) {
-				console.log(objectId);
-				var detailData = {"detail": photos.get(objectId).toJSON()};
-				console.log(detailData);
-				var detailTemplate = $('#detail').text();
-				var detailHTML = Mustache.render(detailTemplate, detailData);
-				$('#single-detail').html(detailHTML);
-				$('#photo-grid').hide();
-				$('#single-detail').show();
+		var detailData = {"detail": photos.get(objectId).toJSON()};
+		var detailTemplate = $('#detail').text();
+		var detailHTML = Mustache.render(detailTemplate, detailData);
+		$('#single-detail').html(detailHTML);
+		$('#photo-grid').hide();
+		$('#single-detail').show();
+	});
+
+router.on('route:edit', function(objectId){
+		var updateData = photos.get(objectId);
+		var editData = {"edit": photos.get(objectId).toJSON()};
+		var editTemplate = $('#edit').text();
+		var editHTML = Mustache.render(editTemplate, editData);
+		$('#single-detail').html(editHTML);
+			$('#single-detail').on('click', 'a', function(e){
+				e.preventDefault();
+				var newName = $('#edit-name').val();
+				var newDesc = $('#edit-description').val();
+				var href = $(this).attr('href');
+				updateData.set({name: newName, description: newDesc});
+				updateData.save({},{
+						success: function(){console.log("saved");},
+						error: function(err){console.log(err);}
+				});
+				router.navigate(href, {trigger:true});
+			});
+	});
+
+	// router.on('route:add', function(){
+	// 		var photo = new Photo();
+	// 		var addData = {"add":{
+	// 				"url": "",
+	// 				"name": "",
+	// 				"description": "",
+	// 				"username": ""
+	// 			}
+	// 		};
+	// 		var addTemplate = $('#add').text();
+	// 		var addHTML = Mustache.render(addTemplate, addData);
+	// 		$('#single-detail').html(addHTML);
+	// 			$('#single-detail').on('click', 'a', function(e){
+	// 				e.preventDefault();
+	// 				var addName = $('#edit-name').val();
+	// 				var addDesc = $('#edit-description').val();
+	// 				var href = $(this).attr('href');
+	// 				photo.set({url: addURL, name: addName, description: addDesc});
+	// 				photo.save({},{
+	// 						success: function(){console.log("saved");},
+	// 						error: function(err){console.log(err);}
+	// 				});
+	// 				router.navigate(href, {trigger:true});
+	// 			});
+	// 	});
 
 
-
-		});
-
-	router.on('route:index', function () {
+router.on('route:index', function () {
 		$('#photo-grid').show();
 		$('#single-detail').hide();
-		});
+	});
+
 });

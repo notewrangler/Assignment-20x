@@ -38,12 +38,32 @@
 
 	<script type="x-tmpl-mustache" id="detail">
 	{{#detail}}
-			<div id="big-pic"><img src="{{url}}" /></div>
+			<div id="big-pic">
+				<img src="{{url}}" />
+				<span id"user">(posted by: {{username}})</span>
+				<button id="edit-button"><a href="/edit/{{objectId}}">Edit</a></button>
+			</div>
 			<div id="stats">
-			<p>{{name}}</p>
-			<p>description{{description}}</p>
+				<h3>{{name}}</h3>
+				<p id="description">{{description}}</p>
 			</div>
 	{{/detail}}
+	</script>
+
+	<script type="x-tmpl-mustache" id="edit">
+	{{#edit}}
+			<div id="big-pic">
+				<img src="{{url}}" />
+				<span id"user">(posted by: {{username}})</span>
+			</div>
+			<div id="stats">
+				<p><label for="edit-name">Edit Name:</label></p>
+				<input type='text' id="edit-name" name="e-name" value="{{name}}"></input>
+				<p><label for="edit-description">Edit Description:</label></p>
+				<textarea rows="8" columns="50" id="edit-description" name="e-description" value="{{description}}"></textarea><br>
+				<button id="save-changes"><a href="/detail/{{objectId}}">Save Changes</a></button>
+			</div>
+	{{/edit}}
 	</script>
 
 </body>
