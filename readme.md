@@ -1,6 +1,4 @@
-#Project 20
 
-####Las Vegas Iron Yard October Cohort, 2015
 
 A photo album/social media app (sans full back end).
 
